@@ -2,6 +2,12 @@
 name = "wordnik"
 version = "0.1.0"
 edition = "2018"
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/archer884/wordnik"
+repository = "https://github.com/archer884/wordnik"
+description = """
+Bindings for the [wordnik](https://www.wordnik.com/) api.
+"""
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

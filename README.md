@@ -1,3 +1,3 @@
 # wordnik
 
-Bindings to the [wordnik](https://www.wordnik.com/) api.
+Bindings for the [wordnik](https://www.wordnik.com/) api.
