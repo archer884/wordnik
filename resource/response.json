@@ -1,0 +1,135 @@
+[
+    {
+        "id": "F5139900-1",
+        "partOfSpeech": "noun",
+        "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+        "sourceDictionary": "ahd-5",
+        "text": "An open recess for holding a fire at the base of a chimney.",
+        "sequence": "1",
+        "score": 0,
+        "labels": [],
+        "citations": [],
+        "word": "fireplace",
+        "relatedWords": [],
+        "exampleUses": [],
+        "textProns": [],
+        "notes": [],
+        "attributionUrl": "https://ahdictionary.com/",
+        "wordnikUrl": "https://www.wordnik.com/words/fireplace"
+    },
+    {
+        "id": "F5139900-2",
+        "partOfSpeech": "noun",
+        "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+        "sourceDictionary": "ahd-5",
+        "text": "A structure, usually of stone or brick, for holding an outdoor fire.",
+        "sequence": "2",
+        "score": 0,
+        "labels": [],
+        "citations": [],
+        "word": "fireplace",
+        "relatedWords": [],
+        "exampleUses": [],
+        "textProns": [],
+        "notes": [],
+        "attributionUrl": "https://ahdictionary.com/",
+        "wordnikUrl": "https://www.wordnik.com/words/fireplace"
+    },
+    {
+        "partOfSpeech": "noun",
+        "attributionText": "from The Century Dictionary.",
+        "sourceDictionary": "century",
+        "text": "The part of a chimney which opens into an apartment, and in which fuel is burned; in a restricted sense, a place for a fire in which the fuel is supported on andirons or is placed upon the hearth.",
+        "labels": [],
+        "citations": [],
+        "word": "fireplace",
+        "relatedWords": [
+            {
+                "relationshipType": "cross-reference",
+                "words": [
+                    "covings of a fireplace"
+                ]
+            }
+        ],
+        "exampleUses": [],
+        "textProns": [],
+        "notes": [],
+        "attributionUrl": "https://www.wordnik.com/colophon#century/",
+        "wordnikUrl": "https://www.wordnik.com/words/fireplace"
+    },
+    {
+        "partOfSpeech": "noun",
+        "attributionText": "from the GNU version of the Collaborative International Dictionary of English.",
+        "sourceDictionary": "gcide",
+        "text": "The part a chimney appropriated to the fire; a hearth; -- usually an open recess in a wall, in which a fire may be built.",
+        "labels": [],
+        "citations": [],
+        "word": "fireplace",
+        "relatedWords": [
+            {
+                "relationshipType": "synonym",
+                "words": [
+                    "hearth"
+                ]
+            }
+        ],
+        "exampleUses": [],
+        "textProns": [],
+        "notes": [],
+        "attributionUrl": "http://gcide.gnu.org.ua/",
+        "wordnikUrl": "https://www.wordnik.com/words/fireplace"
+    },
+    {
+        "partOfSpeech": "noun",
+        "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+        "sourceDictionary": "wiktionary",
+        "text": "an open <xref>hearth</xref> for holding a <xref>fire</xref> at the base of a <xref>chimney</xref>",
+        "labels": [],
+        "citations": [],
+        "word": "fireplace",
+        "relatedWords": [],
+        "exampleUses": [],
+        "textProns": [],
+        "notes": [],
+        "attributionUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+        "wordnikUrl": "https://www.wordnik.com/words/fireplace"
+    },
+    {
+        "partOfSpeech": "noun",
+        "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+        "sourceDictionary": "wordnet",
+        "text": "an open recess in a wall at the base of a chimney where a fire can be built",
+        "labels": [],
+        "citations": [],
+        "word": "fireplace",
+        "relatedWords": [
+            {
+                "relationshipType": "hyponym",
+                "words": [
+                    "fire"
+                ]
+            },
+            {
+                "relationshipType": "hypernym",
+                "words": [
+                    "niche",
+                    "recess"
+                ]
+            }
+        ],
+        "exampleUses": [
+            {
+                "text": "he laid a fire in the hearth and lit it",
+                "position": 0
+            },
+            {
+                "text": "the hearth was black with the charcoal of many fires",
+                "position": 0
+            }
+        ],
+        "textProns": [],
+        "notes": [],
+        "attributionUrl": "https://wordnet.princeton.edu/",
+        "wordnikUrl": "https://www.wordnik.com/words/fireplace"
+    }
+]

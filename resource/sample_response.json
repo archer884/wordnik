@@ -1,0 +1,54 @@
+[
+    {
+      "id": "Y5021700-1",
+      "partOfSpeech": "noun",
+      "attributionText": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "sourceDictionary": "ahd-5",
+      "sequence": "1",
+      "score": 0,
+      "labels": [],
+      "citations": [],
+      "word": "yeti",
+      "relatedWords": [],
+      "exampleUses": [],
+      "textProns": [],
+      "notes": [],
+      "attributionUrl": "https://ahdictionary.com/",
+      "wordnikUrl": "https://www.wordnik.com/words/yeti"
+    },
+    {
+      "partOfSpeech": "noun",
+      "attributionText": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+      "sourceDictionary": "wiktionary",
+      "text": "An unidentified <xref>humanoid</xref> animal said to live in the <xref>Himalayas</xref>.",
+      "labels": [
+        {
+          "text": "cryptozoology",
+          "type": "field"
+        }
+      ],
+      "citations": [],
+      "word": "yeti",
+      "relatedWords": [],
+      "exampleUses": [],
+      "textProns": [],
+      "notes": [],
+      "attributionUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "wordnikUrl": "https://www.wordnik.com/words/yeti"
+    },
+    {
+      "partOfSpeech": "noun",
+      "attributionText": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+      "sourceDictionary": "wordnet",
+      "text": "a large hairy humanoid creature said to live in the Himalayas",
+      "labels": [],
+      "citations": [],
+      "word": "yeti",
+      "relatedWords": [],
+      "exampleUses": [],
+      "textProns": [],
+      "notes": [],
+      "attributionUrl": "https://wordnet.princeton.edu/",
+      "wordnikUrl": "https://www.wordnik.com/words/yeti"
+    }
+  ]
