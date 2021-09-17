@@ -21,3 +21,7 @@ pub struct Definition {
     notes: Vec<String>,
     wordnik_url: Option<String>,
 }
+
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename = "camelCase")]
+pub struct Etymology {}

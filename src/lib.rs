@@ -3,7 +3,7 @@ use std::fmt;
 mod error;
 mod model;
 
-use model::Definition;
+use model::{Definition, Etymology};
 
 static USER_AGENT: &str = concat!("wordnik rust client v", env!("CARGO_PKG_VERSION"));
 static API_BASE: &str = "https://api.wordnik.com/v4";
@@ -45,8 +45,6 @@ impl Client {
     }
 
     // get /word.json/{word}/audio
-    // get /word.json/{word}/definitions
-    // get /word.json/{word}/etymologies
     // get /word.json/{word}/examples
     // get /word.json/{word}/frequency
     // get /word.json/{word}/hyphenation
@@ -55,15 +53,28 @@ impl Client {
     // get /word.json/{word}/relatedWords
     // get /word.json/{word}/scrabbleScore
     // get /word.json/{word}/topExample
-
-    pub fn define(&self, word: &str) -> Result<Vec<Definition>> {
-        //https://api.wordnik.com/v4/word.json/fishbed/definitions?limit=200&includeRelated=false&api_key=YOURAPIKEY
+    
+    // get /word.json/{word}/definitions
+    pub fn definitions(&self, word: &str) -> Result<Vec<Definition>> {
+        // https://api.wordnik.com/v4/word.json/fishbed/definitions?limit=200&includeRelated=false&api_key=YOURAPIKEY
         let url = format!(
             "{}/word.json/{}/definitions?limit=200&includeRelated=true&api_key={}",
             API_BASE, word, self.api_key
         );
         let request = self.inner.get(&url);
         Ok(request.send()?.json()?)
+    }
+    
+    // get /word.json/{word}/etymologies
+    pub fn etymologies(&self, word: &str) -> Result<Vec<Etymology>> {
+        // https://api.wordnik.com/v4/word.json/fireplace/etymologies?useCanonical=true&api_key=YOURAPIKEY
+        let url = format!(
+            "{}/word.json/{}/etymologies?api_key={}",
+            API_BASE, word, self.api_key
+        );
+        let _request = self.inner.get(&url);
+        
+        todo!("for some stupid reason, this returns an XML blob")
     }
 }
 
@@ -95,6 +106,12 @@ mod tests {
     #[test]
     fn can_request_definition() {
         let client = super::Client::test_client();
-        assert!(dbg!(client.define("fireplace")).is_ok())
+        assert!(dbg!(client.definitions("fireplace")).is_ok())
+    }
+
+    #[test]
+    fn can_request_etymology() {
+        let client = super::Client::test_client();
+        assert!(dbg!(client.etymologies("horse")).is_ok());
     }
 }
