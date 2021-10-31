@@ -25,3 +25,15 @@ pub struct Definition {
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename = "camelCase")]
 pub struct Etymology {}
+
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename = "camelCase")]
+pub struct RandomWord {
+    canonical_form: Option<String>,
+    id: i32,
+    original_word: Option<String>,
+    #[serde(default = "Vec::new")]
+    suggestions: Vec<String>,
+    vulgar: Option<String>,
+    word: Option<String>
+}

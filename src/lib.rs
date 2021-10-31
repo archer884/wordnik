@@ -1,9 +1,10 @@
-use std::fmt;
-
+mod parameters;
 mod error;
 mod model;
 
-use model::{Definition, Etymology};
+use std::fmt;
+use model::*;
+use parameters::*;
 
 static USER_AGENT: &str = concat!("wordnik rust client v", env!("CARGO_PKG_VERSION"));
 static API_BASE: &str = "https://api.wordnik.com/v4";
@@ -44,7 +45,33 @@ impl Client {
         }
     }
 
+    // Word API endpoint //
+
     // get /word.json/{word}/audio
+    
+    // get /word.json/{word}/definitions
+    pub fn definitions(&self, word: &str, args: Option<DefinitionArgs>) -> Result<Vec<Definition>> {
+        let args = args.unwrap_or(DefinitionArgs::default()); 
+        let url = format!(
+            "{}/word.json/{}/definitions?api_key={}{}",
+            API_BASE, word, self.api_key, args.to_uri()
+        );
+        let request = self.inner.get(&url);
+        Ok(request.send()?.json()?)
+    }
+    
+    // get /word.json/{word}/etymologies
+    pub fn etymologies(&self, word: &str, args: Option<EtymologiesArgs>) -> Result<Vec<Etymology>> {
+        let args = args.unwrap_or(EtymologiesArgs::default());
+        let url = format!(
+            "{}/word.json/{}/etymologies?api_key={}{}",
+            API_BASE, word, self.api_key, args.to_uri()
+        );
+        let _request = self.inner.get(&url);
+        
+        todo!("for some stupid reason, this returns an XML blob")
+    }
+
     // get /word.json/{word}/examples
     // get /word.json/{word}/frequency
     // get /word.json/{word}/hyphenation
@@ -53,29 +80,34 @@ impl Client {
     // get /word.json/{word}/relatedWords
     // get /word.json/{word}/scrabbleScore
     // get /word.json/{word}/topExample
-    
-    // get /word.json/{word}/definitions
-    pub fn definitions(&self, word: &str) -> Result<Vec<Definition>> {
-        // https://api.wordnik.com/v4/word.json/fishbed/definitions?limit=200&includeRelated=false&api_key=YOURAPIKEY
+
+    // Words API endpoint //
+
+    // get /words.json/randomWord
+    pub fn random_word(&self, args: Option<RandomWordArgs>) -> Result<RandomWord> {
+        let args = args.unwrap_or(RandomWordArgs::default()); 
         let url = format!(
-            "{}/word.json/{}/definitions?limit=200&includeRelated=true&api_key={}",
-            API_BASE, word, self.api_key
+           "{}/words.json/randomWord?api_key={}{}",
+           API_BASE, self.api_key, args.to_uri()
         );
         let request = self.inner.get(&url);
         Ok(request.send()?.json()?)
     }
-    
-    // get /word.json/{word}/etymologies
-    pub fn etymologies(&self, word: &str) -> Result<Vec<Etymology>> {
-        // https://api.wordnik.com/v4/word.json/fireplace/etymologies?useCanonical=true&api_key=YOURAPIKEY
+
+    // get /words.json/randomWords
+    pub fn random_words(&self, args: Option<RandomWordsArgs>) -> Result<Vec<RandomWord>> {
+        let args = args.unwrap_or(RandomWordsArgs::default()); 
         let url = format!(
-            "{}/word.json/{}/etymologies?api_key={}",
-            API_BASE, word, self.api_key
+           "{}/words.json/randomWords?api_key={}{}",
+           API_BASE, self.api_key, args.to_uri()
         );
-        let _request = self.inner.get(&url);
-        
-        todo!("for some stupid reason, this returns an XML blob")
+        let request = self.inner.get(&url);
+        Ok(request.send()?.json()?)
     }
+
+    // get /words.json/reverseDictionary
+    // get /words.json/search/{query} (!! Deprecated for wordnik api v4 !!)
+    // get /words.json/wordOfTheDay 
 }
 
 #[inline]
@@ -106,12 +138,24 @@ mod tests {
     #[test]
     fn can_request_definition() {
         let client = super::Client::test_client();
-        assert!(dbg!(client.definitions("fireplace")).is_ok())
+        assert!(dbg!(client.definitions("fireplace", None)).is_ok())
+    }
+
+    #[test]
+    fn can_request_random_word() {
+        let client = super::Client::test_client();
+        assert!(dbg!(client.random_word(None)).is_ok())
+    }
+
+    #[test]
+    fn can_request_random_words() {
+        let client = super::Client::test_client();
+        assert!(dbg!(client.random_words(None)).is_ok())
     }
 
     #[test]
     fn can_request_etymology() {
         let client = super::Client::test_client();
-        assert!(dbg!(client.etymologies("horse")).is_ok());
+        assert!(dbg!(client.etymologies("horse", None)).is_ok());
     }
 }
