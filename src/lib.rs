@@ -1,9 +1,13 @@
 use std::fmt;
 
+mod args;
 mod error;
 mod model;
 
+use args::DefinitionsArgs;
 use model::{Definition, Etymology};
+
+use crate::args::Args;
 
 static USER_AGENT: &str = concat!("wordnik rust client v", env!("CARGO_PKG_VERSION"));
 static API_BASE: &str = "https://api.wordnik.com/v4";
@@ -53,10 +57,9 @@ impl Client {
     // get /word.json/{word}/relatedWords
     // get /word.json/{word}/scrabbleScore
     // get /word.json/{word}/topExample
-    
+
     // get /word.json/{word}/definitions
     pub fn definitions(&self, word: &str) -> Result<Vec<Definition>> {
-        // https://api.wordnik.com/v4/word.json/fishbed/definitions?limit=200&includeRelated=false&api_key=YOURAPIKEY
         let url = format!(
             "{}/word.json/{}/definitions?limit=200&includeRelated=true&api_key={}",
             API_BASE, word, self.api_key
@@ -64,16 +67,32 @@ impl Client {
         let request = self.inner.get(&url);
         Ok(request.send()?.json()?)
     }
-    
+
+    // get /word.json/{word}/definitions
+    pub fn definitions_with_args(
+        &self,
+        word: &str,
+        params: &DefinitionsArgs,
+    ) -> Result<Vec<Definition>> {
+        let url = format!(
+            "{}/word.json/{}/definitions?api_key={}&{}",
+            API_BASE,
+            word,
+            self.api_key,
+            &params.to_urlencoded(),
+        );
+        let request = self.inner.get(&url);
+        Ok(request.send()?.json()?)
+    }
+
     // get /word.json/{word}/etymologies
     pub fn etymologies(&self, word: &str) -> Result<Vec<Etymology>> {
-        // https://api.wordnik.com/v4/word.json/fireplace/etymologies?useCanonical=true&api_key=YOURAPIKEY
         let url = format!(
             "{}/word.json/{}/etymologies?api_key={}",
             API_BASE, word, self.api_key
         );
         let _request = self.inner.get(&url);
-        
+
         todo!("for some stupid reason, this returns an XML blob")
     }
 }
