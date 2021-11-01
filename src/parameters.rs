@@ -24,12 +24,12 @@ macro_rules! macro_args{
         #[allow(dead_code)]
         #[allow(non_snake_case)]
         pub struct $name {
-            $($field_opt_name: Option<$field_opt_type>,)*
-            $($field_name: $field_type,)*
+            $(pub $field_opt_name: Option<$field_opt_type>,)*
+            $(pub $field_name: $field_type,)*
         }
 
         impl $name {
-            pub fn to_uri(&self) -> String {
+            pub(crate) fn to_uri(&self) -> String {
                 let mut uri = String::new();
                 $(uri = format!("{}&{}={}", uri, stringify!($field_name), self.$field_name);)*
                 $(if self.$field_opt_name.is_some() {

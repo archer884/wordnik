@@ -1,4 +1,4 @@
-mod parameters;
+pub mod parameters;
 mod error;
 mod model;
 
