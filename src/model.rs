@@ -10,7 +10,7 @@ pub struct Definition {
     pub attribution_url: Option<String>,
     pub attribution_text: Option<String>,
     pub source_dictionary: Option<String>,
-    pub text: String,
+    pub text: Option<String>,
     pub labels: Vec<String>,
     pub citations: Vec<String>,
     pub word: String,
