@@ -5,8 +5,11 @@ mod model;
 
 use model::{Definition, Etymology};
 
-static USER_AGENT: &str = concat!("wordnik rust client v", env!("CARGO_PKG_VERSION"));
 static API_BASE: &str = "https://api.wordnik.com/v4";
+static USER_AGENT: &str = concat!("wordnik rust client v", env!("CARGO_PKG_VERSION"));
+
+#[cfg(test)]
+static WORDNIK_API_KEY_NAME: &str = "WORDNIK_API_KEY";
 
 pub type Result<T, E = error::Error> = std::result::Result<T, E>;
 
@@ -31,7 +34,7 @@ impl Client {
         dotenv::dotenv().ok();
         Self {
             inner: build_inner_client().unwrap(),
-            api_key: dotenv::var("API_KEY").unwrap(),
+            api_key: dotenv::var(WORDNIK_API_KEY_NAME).unwrap(),
         }
     }
 }
@@ -72,9 +75,12 @@ impl Client {
             "{}/word.json/{}/etymologies?api_key={}",
             API_BASE, word, self.api_key
         );
-        let _request = self.inner.get(&url);
-        
-        todo!("for some stupid reason, this returns an XML blob")
+
+        // I was wrong. I thought this came down as an xml blob, but it doesn't. No, sir: this
+        // gets sent over the wire as a JSON array of escaped XML strings, for all have sinned 
+        // and fall short of the glory of God. I can't imagine what anyone would want this for,
+        // but here it is.
+        Ok(self.inner.get(&url).send()?.json()?)
     }
 }
 

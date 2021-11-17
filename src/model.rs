@@ -6,22 +6,24 @@ use serde::Deserialize;
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename = "camelCase")]
 pub struct Definition {
-    part_of_speech: Option<String>,
-    attribution_url: Option<String>,
-    attribution_text: Option<String>,
-    source_dictionary: Option<String>,
-    text: String,
-    labels: Vec<String>,
-    citations: Vec<String>,
-    word: String,
+    pub part_of_speech: Option<String>,
+    pub attribution_url: Option<String>,
+    pub attribution_text: Option<String>,
+    pub source_dictionary: Option<String>,
+    pub text: String,
+    pub labels: Vec<String>,
+    pub citations: Vec<String>,
+    pub word: String,
     #[serde(default = "Vec::new")]
-    related_words: Vec<String>,
+    pub related_words: Vec<String>,
     #[serde(default = "Vec::new")]
-    example_uses: Vec<String>,
-    notes: Vec<String>,
-    wordnik_url: Option<String>,
+    pub example_uses: Vec<String>,
+    pub notes: Vec<String>,
+    pub wordnik_url: Option<String>,
 }
 
 #[derive(Clone, Debug, Deserialize)]
-#[serde(rename = "camelCase")]
-pub struct Etymology {}
+#[serde(rename = "camelCase", transparent)]
+pub struct Etymology {
+    pub etymology: String,
+}
