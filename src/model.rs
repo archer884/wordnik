@@ -37,7 +37,6 @@ pub struct Etymology {
     pub etymology: String,
 }
 
-
 #[derive(Clone, Debug, Deserialize)]
 #[serde(rename = "camelCase")]
 pub struct RandomWord {
@@ -47,5 +46,5 @@ pub struct RandomWord {
     #[serde(default = "Vec::new")]
     pub suggestions: Vec<String>,
     pub vulgar: Option<String>,
-    pub word: Option<String>
+    pub word: String
 }
