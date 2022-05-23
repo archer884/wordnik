@@ -6,8 +6,11 @@ use std::fmt;
 use model::*;
 use parameters::*;
 
-static USER_AGENT: &str = concat!("wordnik rust client v", env!("CARGO_PKG_VERSION"));
 static API_BASE: &str = "https://api.wordnik.com/v4";
+static USER_AGENT: &str = concat!("wordnik rust client v", env!("CARGO_PKG_VERSION"));
+
+#[cfg(test)]
+static WORDNIK_API_KEY_NAME: &str = "WORDNIK_API_KEY";
 
 pub type Result<T, E = error::Error> = std::result::Result<T, E>;
 
@@ -32,7 +35,7 @@ impl Client {
         dotenv::dotenv().ok();
         Self {
             inner: build_inner_client().unwrap(),
-            api_key: dotenv::var("API_KEY").unwrap(),
+            api_key: dotenv::var(WORDNIK_API_KEY_NAME).unwrap(),
         }
     }
 }
@@ -67,9 +70,8 @@ impl Client {
             "{}/word.json/{}/etymologies?api_key={}{}",
             API_BASE, word, self.api_key, args.to_uri()
         );
-        let _request = self.inner.get(&url);
-        
-        todo!("for some stupid reason, this returns an XML blob")
+        let request = self.inner.get(&url);
+        Ok(request.send()?.json()?)
     }
 
     // get /word.json/{word}/examples
@@ -101,8 +103,12 @@ impl Client {
            "{}/words.json/randomWords?api_key={}{}",
            API_BASE, self.api_key, args.to_uri()
         );
-        let request = self.inner.get(&url);
-        Ok(request.send()?.json()?)
+
+        // I was wrong. I thought this came down as an xml blob, but it doesn't. No, sir: this
+        // gets sent over the wire as a JSON array of escaped XML strings, for all have sinned 
+        // and fall short of the glory of God. I can't imagine what anyone would want this for,
+        // but here it is.
+        Ok(self.inner.get(&url).send()?.json()?)
     }
 
     // get /words.json/reverseDictionary
@@ -126,7 +132,7 @@ fn build_inner_client() -> reqwest::Result<reqwest::blocking::Client> {
 mod tests {
     #[test]
     fn user_agent_is_correct() {
-        assert_eq!(super::USER_AGENT, "wordnik rust client v0.1.0");
+        assert_eq!(super::USER_AGENT, concat!("wordnik rust client v", env!("CARGO_PKG_VERSION")));
     }
 
     #[test]
