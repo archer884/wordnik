@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use serde::Deserialize;
+use std::collections::HashMap;
 
 // Of course, there are a boatload of properties here that I have no clue about.
 // For now, I have skipped deserialization of several of these.
@@ -46,5 +46,5 @@ pub struct RandomWord {
     #[serde(default = "Vec::new")]
     pub suggestions: Vec<String>,
     pub vulgar: Option<String>,
-    pub word: String
+    pub word: String,
 }

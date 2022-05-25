@@ -3,8 +3,9 @@ mod error;
 mod model;
 
 use std::fmt;
-use model::*;
-use args::*;
+
+use args::{Args, DefinitionsArgs, RandomWordArgs, RandomWordsArgs};
+use model::{Definition, Etymology, RandomWord};
 
 static API_BASE: &str = "https://api.wordnik.com/v4";
 static USER_AGENT: &str = concat!("wordnik rust client v", env!("CARGO_PKG_VERSION"));
@@ -51,7 +52,7 @@ impl Client {
     // Word API endpoint //
 
     // get /word.json/{word}/audio
-    
+
     // get /word.json/{word}/definitions
     pub fn definitions(&self, word: &str) -> Result<Vec<Definition>> {
         let url = format!(
@@ -64,13 +65,16 @@ impl Client {
 
     pub fn definitions_args(&self, word: &str, args: &DefinitionsArgs) -> Result<Vec<Definition>> {
         let url = format!(
-            "{}/word.json/{}/definitions?api_key={}{}",
-            API_BASE, word, self.api_key, args.to_urlencoded()
+            "{}/word.json/{}/definitions?api_key={}&{}",
+            API_BASE,
+            word,
+            self.api_key,
+            args.to_get_query_str()
         );
         let request = self.inner.get(&url);
-        Ok(request.send()?.json()?)
+        Ok(dbg!(request.send()?).json()?)
     }
-    
+
     // get /word.json/{word}/etymologies
     pub fn etymologies(&self, word: &str) -> Result<Vec<Etymology>> {
         let url = format!(
@@ -95,8 +99,8 @@ impl Client {
     // get /words.json/randomWord
     pub fn random_word(&self) -> Result<RandomWord> {
         let url = format!(
-           "{}/words.json/randomWord?api_key={}",
-           API_BASE, self.api_key
+            "{}/words.json/randomWord?api_key={}",
+            API_BASE, self.api_key
         );
         let request = self.inner.get(&url);
         Ok(request.send()?.json()?)
@@ -104,8 +108,10 @@ impl Client {
 
     pub fn random_word_args(&self, args: &RandomWordArgs) -> Result<RandomWord> {
         let url = format!(
-           "{}/words.json/randomWord?api_key={}{}",
-           API_BASE, self.api_key, args.to_urlencoded()
+            "{}/words.json/randomWord?api_key={}&{}",
+            API_BASE,
+            self.api_key,
+            args.to_get_query_str()
         );
         let request = self.inner.get(&url);
         Ok(request.send()?.json()?)
@@ -114,8 +120,8 @@ impl Client {
     // get /words.json/randomWords
     pub fn random_words(&self) -> Result<Vec<RandomWord>> {
         let url = format!(
-           "{}/words.json/randomWords?api_key={}",
-           API_BASE, self.api_key
+            "{}/words.json/randomWords?api_key={}",
+            API_BASE, self.api_key
         );
 
         Ok(self.inner.get(&url).send()?.json()?)
@@ -123,12 +129,14 @@ impl Client {
 
     pub fn random_words_args(&self, args: &RandomWordsArgs) -> Result<Vec<RandomWord>> {
         let url = format!(
-           "{}/words.json/randomWords?api_key={}{}",
-           API_BASE, self.api_key, args.to_urlencoded()
+            "{}/words.json/randomWords?api_key={}&{}",
+            API_BASE,
+            self.api_key,
+            args.to_get_query_str()
         );
 
         // I was wrong. I thought this came down as an xml blob, but it doesn't. No, sir: this
-        // gets sent over the wire as a JSON array of escaped XML strings, for all have sinned 
+        // gets sent over the wire as a JSON array of escaped XML strings, for all have sinned
         // and fall short of the glory of God. I can't imagine what anyone would want this for,
         // but here it is.
         //
@@ -138,7 +146,7 @@ impl Client {
 
     // get /words.json/reverseDictionary
     // get /words.json/search/{query} (!! Deprecated for wordnik api v4 !!)
-    // get /words.json/wordOfTheDay 
+    // get /words.json/wordOfTheDay
 }
 
 #[inline]
@@ -155,7 +163,7 @@ fn build_inner_client() -> reqwest::Result<reqwest::blocking::Client> {
 
 #[cfg(test)]
 mod tests {
-    use crate::args::{RandomWordArgs, PartOfSpeech, DefinitionsArgs, RandomWordsArgs};
+    use crate::args::{DefinitionsArgs, PartOfSpeech, RandomWordArgs, RandomWordsArgs};
 
     #[test]
     fn user_agent_is_correct() {
