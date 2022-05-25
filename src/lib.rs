@@ -65,14 +65,14 @@ impl Client {
 
     pub fn definitions_args(&self, word: &str, args: &DefinitionsArgs) -> Result<Vec<Definition>> {
         let url = format!(
-            "{}/word.json/{}/definitions?api_key={}{}",
+            "{}/word.json/{}/definitions?api_key={}&{}",
             API_BASE,
             word,
             self.api_key,
-            args.to_urlencoded()
+            args.to_get_query_str()
         );
         let request = self.inner.get(&url);
-        Ok(request.send()?.json()?)
+        Ok(dbg!(request.send()?).json()?)
     }
 
     // get /word.json/{word}/etymologies
@@ -111,7 +111,7 @@ impl Client {
             "{}/words.json/randomWord?api_key={}&{}",
             API_BASE,
             self.api_key,
-            args.to_urlencoded()
+            args.to_get_query_str()
         );
         let request = self.inner.get(&url);
         Ok(request.send()?.json()?)
@@ -132,7 +132,7 @@ impl Client {
             "{}/words.json/randomWords?api_key={}&{}",
             API_BASE,
             self.api_key,
-            args.to_urlencoded()
+            args.to_get_query_str()
         );
 
         // I was wrong. I thought this came down as an xml blob, but it doesn't. No, sir: this

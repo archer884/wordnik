@@ -9,10 +9,10 @@ pub trait Args<'a> {
 
     fn args(&'a self) -> Self::KeyValuePairs;
 
-    fn to_urlencoded(&'a self) -> String {
+    fn to_get_query_str(&'a self) -> String {
         let mut args = self.args();
         let mut buf = match args.next() {
-            Some((key, value)) => format!("{key}={value}"),
+            Some((key, value)) => format!("{}={}", key, value),
             None => return String::new(),
         };
 
