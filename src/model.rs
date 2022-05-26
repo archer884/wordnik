@@ -1,6 +1,5 @@
-use std::collections::HashMap;
-
 use serde::Deserialize;
+use std::collections::HashMap;
 
 // Of course, there are a boatload of properties here that I have no clue about.
 // For now, I have skipped deserialization of several of these.
@@ -27,6 +26,7 @@ pub struct Definition {
     pub related_words: Vec<String>,
     #[serde(default = "Vec::new")]
     pub example_uses: Vec<String>,
+    #[serde(default = "Vec::new")]
     pub notes: Vec<String>,
     pub wordnik_url: Option<String>,
 }
@@ -35,4 +35,16 @@ pub struct Definition {
 #[serde(rename = "camelCase", transparent)]
 pub struct Etymology {
     pub etymology: String,
+}
+
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename = "camelCase")]
+pub struct RandomWord {
+    pub canonical_form: Option<String>,
+    pub id: i32,
+    pub original_word: Option<String>,
+    #[serde(default = "Vec::new")]
+    pub suggestions: Vec<String>,
+    pub vulgar: Option<String>,
+    pub word: String,
 }
