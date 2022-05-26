@@ -146,7 +146,7 @@ pub struct RandomWordsArgs {
     pub min_length: u32,
     pub max_length: i32,
 
-    // We set those two as options cause they are optionl parameters in the API
+    // We set these two as optional because they are optional parameters in the API
     pub sort_by: Option<SortType>,
     pub sort_order: Option<SortOrder>,
 

@@ -156,19 +156,17 @@ impl StringParam for SourceDictionaries {
 }
 
 fn format_csv(params: &[impl StringParam]) -> String {
-    if params.is_empty() {
-        return String::new();
-    }
+    let mut params = params.iter();
+    let mut buf = match params.next() {
+        Some(first) => String::from(first.as_str()),
+        None => return String::new(),
+    };
 
-    if params.len() == 1 {
-        return params[0].as_str().to_string();
-    }
-
-    let mut buf = params[0].as_str().to_string();
-    for param in &params[1..] {
+    for param in params {
         buf += ",";
         buf += param.as_str();
     }
+
     buf
 }
 

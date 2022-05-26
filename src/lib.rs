@@ -11,7 +11,7 @@ static API_BASE: &str = "https://api.wordnik.com/v4";
 static USER_AGENT: &str = concat!("wordnik rust client v", env!("CARGO_PKG_VERSION"));
 
 #[cfg(test)]
-static WORDNIK_API_KEY_NAME: &str = "WORDNIK_API_KEY";
+static WORDNIK_API_KEY: &str = "WORDNIK_API_KEY";
 
 pub type Result<T, E = error::Error> = std::result::Result<T, E>;
 
@@ -36,7 +36,7 @@ impl Client {
         dotenv::dotenv().ok();
         Self {
             inner: build_inner_client().unwrap(),
-            api_key: dotenv::var(WORDNIK_API_KEY_NAME).unwrap(),
+            api_key: dotenv::var(WORDNIK_API_KEY).unwrap(),
         }
     }
 }
@@ -139,8 +139,10 @@ impl Client {
         // gets sent over the wire as a JSON array of escaped XML strings, for all have sinned
         // and fall short of the glory of God. I can't imagine what anyone would want this for,
         // but here it is.
-        //
-        // Dw, it's all good, not like we know when the strings are actually XML blobs in the API documentation anyway
+
+        // Dw, it's all good, not like we know when the strings are actually XML blobs in the API
+        // documentation anyway.
+
         Ok(self.inner.get(&url).send()?.json()?)
     }
 
@@ -164,11 +166,6 @@ fn build_inner_client() -> reqwest::Result<reqwest::blocking::Client> {
 #[cfg(test)]
 mod tests {
     use crate::args::{DefinitionsArgs, PartOfSpeech, RandomWordArgs, RandomWordsArgs};
-
-    #[test]
-    fn user_agent_is_correct() {
-        assert_eq!(super::USER_AGENT, "wordnik rust client v0.1.1");
-    }
 
     #[test]
     fn can_create_test_client() {
